@@ -7,6 +7,7 @@ certifi==2025.7.9
 charset-normalizer==3.4.2
 click==8.2.1
 colorama==0.4.6
+coverage==7.9.2
 distro==1.9.0
 dnspython==2.7.0
 email_validator==2.2.0
@@ -36,6 +37,7 @@ pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.2
 pytest==8.4.1
+pytest-cov==6.2.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 python-multipart==0.0.20
@@ -54,7 +56,6 @@ starlette==0.47.1
 tqdm==4.67.1
 typer==0.16.0
 types-requests==2.32.4.20250611
-types-ujson==5.10.0.20250326
 typing-inspection==0.4.1
 typing_extensions==4.14.1
 urllib3==2.5.0
