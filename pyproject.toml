@@ -1,14 +1,19 @@
 [tool.pytest.ini_options]
-addopts = "--cov=app --cov-report=term --cov-report=term-missing"
-
-[tool.mypy]
-files = ["app", "tests"]
-ignore_missing_imports = true
-strict = true
+pythonpath = ["app"]
+addopts = "--cov=app --cov-report=term-missing"
 
 [tool.coverage.run]
+source = ["app"]
 omit = [
     "*/tests/*",
     "*/__init__.py",
     "*/config.py"
 ]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.mypy]
+files = ["app", "tests"]
+ignore_missing_imports = true
+strict = true
