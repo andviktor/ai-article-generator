@@ -1,13 +1,14 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
 class Article(BaseModel):
     topic: str
     length: int = 1000
-    requirements: str | None = None
-    reference: str | None = None
+    requirements: Optional[str] = None
+    reference: Optional[str] = None
     output_format: str = "html"
-    result: str | None = None
+    result: Optional[str] = None
 
 
 class Image(BaseModel):
@@ -16,7 +17,7 @@ class Image(BaseModel):
     height: int = 1024
     amazon_s3_bucket: str
     amazon_s3_path: str
-    requirements: str | None = None
-    reference: str | None = None
+    requirements: Optional[str] = None
+    reference: Optional[str] = None
     quality: str = "hd"
-    url: str | None = None
+    url: Optional[str] = None
