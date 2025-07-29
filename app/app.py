@@ -17,6 +17,11 @@ openai_client: OpenAIClient = OpenAIClient()
 amazon_s3_client: AmazonS3Client = AmazonS3Client()
 
 
+@app.get("/")
+async def root() -> dict:
+    return {"message": "Welcome to the AI Content Generation API"}
+
+
 @app.post("/create-article")
 async def create_article(article: Article) -> Article:
     prompt: str = Config.PROMPT_CREATE_ARTICLE
