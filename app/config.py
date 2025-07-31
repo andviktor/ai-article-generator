@@ -7,8 +7,6 @@ load_dotenv()
 
 
 class Config:
-    HOST: str = os.getenv("HOST", "0.0.0.0")
-    PORT: str = os.getenv("PORT", "8080")
     DEEPSEEK_BASE_URL: str = os.getenv("DEEPSEEK_BASE_URL", "")
     DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 

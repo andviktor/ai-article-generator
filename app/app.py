@@ -3,7 +3,6 @@ import shutil
 import requests
 import time
 from fastapi import FastAPI
-import uvicorn
 
 from app.config import Config
 from app.models import Article, Image
@@ -81,7 +80,3 @@ async def create_image(image: Image) -> Image:
         shutil.rmtree(Config.AWS_LOCAL_TMP_DIR)
 
     return image
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host=Config.HOST, port=Config.PORT)
