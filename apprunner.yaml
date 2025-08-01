@@ -16,4 +16,5 @@ run:
   network:
     port: 8080
   secrets:
-    - value-from: "arn:aws:secretsmanager:us-east-1:851725500171:secret:ai-article-generator-secrets-pqh70E"
+    - name: SECRETS
+      value-from: "arn:aws:secretsmanager:us-east-1:851725500171:secret:ai-article-generator-secrets-pqh70E"

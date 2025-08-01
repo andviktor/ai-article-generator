@@ -1,4 +1,5 @@
 import os
+import json
 
 from dotenv import load_dotenv
 
@@ -7,7 +8,11 @@ load_dotenv()
 
 
 class Config:
-    DEEPSEEK_BASE_URL: str = os.getenv("DEEPSEEK_BASE_URL", "")
+    AWS_SECRETS: dict = json.loads(os.getenv("SECRETS")) if os.getenv("SECRETS") else {}
+    if AWS_SECRETS:
+        os.environ.update(AWS_SECRETS)
+
+    DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
     DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
