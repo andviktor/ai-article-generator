@@ -18,10 +18,7 @@ openai_client: OpenAIClient = OpenAIClient()
 amazon_s3_client: AmazonS3Client = AmazonS3Client()
 
 
-api_v1_router = APIRouter(
-    prefix="/api/v1",
-    dependencies=[Depends(verify_token)]
-)
+api_v1_router = APIRouter(prefix="/api/v1", dependencies=[Depends(verify_token)])
 
 
 @app.get("/")

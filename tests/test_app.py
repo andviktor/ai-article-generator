@@ -1,8 +1,22 @@
 from unittest.mock import patch, MagicMock, mock_open
 from fastapi.testclient import TestClient
-from app.app import app
+from fastapi import Depends
+from app.app import app, verify_token
+
+
+ENDPOINTS = {
+    "create_article": "/api/v1/create-article",
+    "create_image": "/api/v1/create-image"
+}
 
 client = TestClient(app)
+
+
+def override_verify_token():
+    return None
+
+
+app.dependency_overrides[verify_token] = override_verify_token
 
 
 @patch("app.app.deepseek_client.request", return_value="Generated article")
@@ -15,7 +29,7 @@ def test_create_article_all_paths(mock_request):
         "output_format": "html"
     }
 
-    response = client.post("/create-article", json=payload)
+    response = client.post(ENDPOINTS["create_article"], json=payload)
     assert response.status_code == 200
 
     result = response.json()
@@ -24,7 +38,7 @@ def test_create_article_all_paths(mock_request):
     mock_request.assert_called_once()
 
     payload["output_format"] = "markdown"
-    response = client.post("/create-article", json=payload)
+    response = client.post(ENDPOINTS["create_article"], json=payload)
     assert response.status_code == 200
     mock_request.assert_called()
 
@@ -60,7 +74,7 @@ def test_create_image_all_paths(
         "amazon_s3_path": "media/"
     }
 
-    response = client.post("/create-image", json=payload)
+    response = client.post(ENDPOINTS["create_image"], json=payload)
     assert response.status_code == 200
     result = response.json()
     assert result["url"].startswith("https://s3.amazonaws.com")
