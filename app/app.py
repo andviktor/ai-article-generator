@@ -2,10 +2,11 @@ import os
 import shutil
 import requests
 import time
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, APIRouter
 
 from app.config import Config
 from app.models import Article, Image
+from app.modules.auth.token import verify_token
 from app.modules.deepseek.client import DeepseekClient
 from app.modules.openai.client import OpenAIClient
 from app.modules.amazon_s3.client import AmazonS3Client
@@ -17,12 +18,18 @@ openai_client: OpenAIClient = OpenAIClient()
 amazon_s3_client: AmazonS3Client = AmazonS3Client()
 
 
+api_v1_router = APIRouter(
+    prefix="/api/v1",
+    dependencies=[Depends(verify_token)]
+)
+
+
 @app.get("/")
 async def root() -> dict:
     return {"message": "Welcome to the AI Content Generation API"}
 
 
-@app.post("/create-article")
+@api_v1_router.post("/create-article")
 async def create_article(article: Article) -> Article:
     prompt: str = Config.PROMPT_CREATE_ARTICLE
     if article.requirements:
@@ -49,7 +56,7 @@ async def create_article(article: Article) -> Article:
     return article
 
 
-@app.post("/create-image")
+@api_v1_router.post("/create-image")
 async def create_image(image: Image) -> Image:
     response_image_url: str = openai_client.request(
         prompt=Config.PROMPT_CREATE_IMAGE,
@@ -80,3 +87,6 @@ async def create_image(image: Image) -> Image:
         shutil.rmtree(Config.AWS_LOCAL_TMP_DIR)
 
     return image
+
+
+app.include_router(api_v1_router)

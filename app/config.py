@@ -12,6 +12,8 @@ class Config:
     if AWS_SECRETS:
         os.environ.update(AWS_SECRETS)
 
+    AUTH_TOKENS: list = list(json.loads(os.getenv("AUTH_TOKENS", "{}")).values())
+
     DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
     DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 
